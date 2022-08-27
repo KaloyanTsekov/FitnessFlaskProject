@@ -27,7 +27,6 @@ class DevelopmentConfig:
     )
 
 
-
 class TestConfig:
     FLASK_ENV = "test"
     DEBUG = True
@@ -38,11 +37,12 @@ class TestConfig:
     )
 
 
-def create_app(config="config.DevelopmentConfig"):
+def create_app(conf="config.DevelopmentConfig"):
     app = Flask(__name__)
     db.init_app(app)
-    app.config.from_object(config)
+    app.config.from_object(conf)
     migrate = Migrate(app, db)
+
     api = Api(app)
     [api.add_resource(*route_data) for route_data in routes]
     return app
