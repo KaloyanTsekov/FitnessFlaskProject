@@ -5,7 +5,7 @@ from flask_httpauth import HTTPTokenAuth
 from jwt import ExpiredSignatureError, InvalidTokenError
 from werkzeug.exceptions import Unauthorized
 
-from models import RegularUser
+from models import RegularUser, AdminUser, ModeratorUser
 
 
 class AuthenticationManager:
@@ -33,6 +33,13 @@ auth = HTTPTokenAuth()
 @auth.verify_token
 def verify(token):
     user_id = AuthenticationManager.decode_token(token)
-    print(RegularUser.query.filter_by(pk=user_id).first())
-
-    return RegularUser.query.filter_by(pk=user_id).first()
+    #print(RegularUser.query.filter_by(pk=user_id).first())
+    regular_user = RegularUser.query.filter_by(pk=user_id).first()
+    if regular_user:
+        return regular_user
+    moderator_user = ModeratorUser.query.filter_by(pk=user_id).first()
+    if moderator_user:
+        return moderator_user
+    admin_user = AdminUser.query.filter_by(pk=user_id).first()
+    if admin_user:
+        return admin_user

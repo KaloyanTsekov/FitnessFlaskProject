@@ -18,7 +18,7 @@ class RegularUser(AbstractBaseUserModel):
 
 class ModeratorUser(AbstractBaseUserModel):
     __tablename__ = 'moderator_user'
-    role = db.Column(db.Enum(UserRole), default=UserRole.moderator, nullable=False)
+    role = db.Column(db.Enum(UserRole), default=UserRole.regular, nullable=False)
 
 
 class AdminUser(AbstractBaseUserModel):
