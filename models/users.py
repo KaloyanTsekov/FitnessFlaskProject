@@ -14,12 +14,12 @@ class AbstractBaseUserModel(db.Model):
 class RegularUser(AbstractBaseUserModel):
     __tablename__ = 'regular_user'
     role = db.Column(db.Enum(UserRole), default=UserRole.regular, nullable=False)
-    videos = db.relationship("VideoModel", backref="video_model", lazy="dynamic")
+
 
 class ModeratorUser(AbstractBaseUserModel):
     __tablename__ = 'moderator_user'
     role = db.Column(db.Enum(UserRole), default=UserRole.regular, nullable=False)
-
+    videos = db.relationship("VideoModel", backref="video_model", lazy="dynamic")
 
 class AdminUser(AbstractBaseUserModel):
     __tablename__ = 'admin_user'

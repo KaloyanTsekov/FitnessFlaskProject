@@ -2,6 +2,7 @@ from resources.admin_approver import AdminPromotionResource, AdminDemotionResour
 from resources.authentication import RegisterResource, LoginResource, ModeratorRegisterResource, ModeratorLoginResource, \
     AdminLoginResource
 from resources.videos import VideosResource, ExactVideoResource
+from resources.workouts import WorkoutResource, ExactWorkoutResource
 
 routes = (
     (RegisterResource, "/register/"),
@@ -13,7 +14,8 @@ routes = (
     (AdminDemotionResource, "/admin/demote/"),
     (VideosResource, "/videos/"),
     (ExactVideoResource, "/videos/<int:id>/"),
+    (WorkoutResource, "/workout/"),
+    (ExactWorkoutResource, "/workout/<int:id>/"),
 
-    #(ModeratorLoginResource, "/login/moderator/"),
-    #(AdminLoginResource, "/login/admin/")
+
 )
