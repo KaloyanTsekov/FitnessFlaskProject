@@ -15,7 +15,8 @@ class AbstractCategoryModel(db.Model):
 
 class VideoModel(AbstractExerciseModel, AbstractCategoryModel):
     youtube_link = db.Column(db.String(255), nullable=False)
-
+    users_pk = db.Column(db.Integer, db.ForeignKey("regular_user.pk"), nullable=False)
+    user = db.relationship("RegularUser")
 
 class WorkoutModel(AbstractExerciseModel, AbstractCategoryModel):
     day = db.Column(db.Enum(DaysFromTheWeekend), nullable=False)

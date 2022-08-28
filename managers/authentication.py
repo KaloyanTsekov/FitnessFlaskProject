@@ -32,5 +32,7 @@ auth = HTTPTokenAuth()
 
 @auth.verify_token
 def verify(token):
-    user_pk = AuthenticationManager.decode_token(token)
-    return RegularUser.query.filter_by(pk=user_pk).first()
+    user_id = AuthenticationManager.decode_token(token)
+    print(RegularUser.query.filter_by(pk=user_id).first())
+
+    return RegularUser.query.filter_by(pk=user_id).first()

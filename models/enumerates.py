@@ -8,12 +8,12 @@ class UserRole(Enum):
 
 
 class BodySection(Enum):
-    legs = 'Legs'
-    arms = 'Arms'
-    shoulders = 'Shoulders'
-    chest = 'Chest'
-    back = 'Back'
-    abs = 'ABS'
+    legs = "Legs"
+    arms = "Arms"
+    shoulders = "Shoulders"
+    chest = "Chest"
+    back = "Back"
+    abs = "ABS"
 
 
 class DaysFromTheWeekend(Enum):

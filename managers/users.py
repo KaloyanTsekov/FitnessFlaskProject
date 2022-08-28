@@ -20,5 +20,5 @@ class RegularUserManager:
         if not regular_user:
             raise BadRequest("No such email! Please register!")
         if check_password_hash(regular_user.password, login_data["password"]):
-            return AuthenticationManager.encode_token(regular_user),
+            return AuthenticationManager.encode_token(regular_user)
         raise BadRequest("Wrong credentials!")

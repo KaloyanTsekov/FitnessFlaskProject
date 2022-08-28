@@ -1,3 +1,5 @@
+from flask_api import status
+
 from database import db
 from models import VideoModel
 
@@ -7,10 +9,18 @@ class VideosManager:
     def get_videos():
         return VideoModel.query.all()
 
-    #TODO must be moderator/admin to add videos
     @staticmethod
     def create(data, user):
+        data["users_pk"] = user.pk
         video = VideoModel(**data)
         db.session.add(video)
         db.session.flush()
         return video
+
+    @staticmethod
+    def delete(video_id):
+        target = VideoModel.query.filter_by(id=video_id).first()
+        db.session.delete(target)
+        db.session.flush()
+
+

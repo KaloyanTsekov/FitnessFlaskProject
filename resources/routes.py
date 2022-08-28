@@ -3,6 +3,9 @@ from resources.videos import VideosResource
 
 routes = (
     (RegisterResource, "/register/"),
-    (VideosResource, "/videos/"),
-    (LoginResource, "/login/")
+    #(VideosResource, "/videos/"),
+    (VideosResource, "/videos/<int:id>/"),
+    (LoginResource, "/login/"),
+    #(ModeratorLoginResource, "/login/moderator/"),
+    #(AdminLoginResource, "/login/admin/")
 )
