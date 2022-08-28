@@ -1,11 +1,13 @@
+
 from resources.authentication import RegisterResource, LoginResource
-from resources.videos import VideosResource
+from resources.videos import VideosResource, ExactVideoResource
 
 routes = (
     (RegisterResource, "/register/"),
-    #(VideosResource, "/videos/"),
-    (VideosResource, "/videos/<int:id>/"),
     (LoginResource, "/login/"),
+    (VideosResource, "/videos/"),
+    (ExactVideoResource, "/videos/<int:id>/"),
+
     #(ModeratorLoginResource, "/login/moderator/"),
     #(AdminLoginResource, "/login/admin/")
 )
