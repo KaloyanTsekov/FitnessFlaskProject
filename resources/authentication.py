@@ -45,3 +45,5 @@ class AdminLoginResource(Resource):
         data = request.get_json()
         token = AdminUserManager.login(data)
         return {"token": token}, status.HTTP_200_OK
+
+
