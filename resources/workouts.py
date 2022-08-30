@@ -4,7 +4,7 @@ from flask_restful import Resource
 
 from managers.authentication import auth
 from managers.workouts import WorkoutManager, ExactWorkoutManager
-from models import UserRole
+from models import UserRole, WorkoutModel
 from schemas.requests.workouts import WorkoutSchemaRequest
 from schemas.response.workouts import WorkoutSchemaResponse
 from utilities.decorators import permission_required, validate_schema
@@ -24,7 +24,7 @@ class WorkoutResource(Resource):
     @permission_required(UserRole.regular)
     def get(self):
         user = auth.current_user()
-        workouts = WorkoutManager.get_videos(user)
+        workouts = WorkoutManager.get_workouts(user)
         return WorkoutSchemaResponse().dump(workouts, many=True)
 
 
@@ -34,13 +34,14 @@ class ExactWorkoutResource(Resource):
     @validate_schema(WorkoutSchemaRequest)
     def put(self, id):
         data = request.get_json()
-        auth.current_user()
-        ExactWorkoutManager.put(data, id)
+        user = auth.current_user()
+        print(user.pk)
+        ExactWorkoutManager.put(user, id, WorkoutModel, data )
         return {"Status": "EDITED"}, status.HTTP_200_OK
 
     @auth.login_required
     @permission_required(UserRole.regular)
     def delete(self, id):
-        auth.current_user()
-        ExactWorkoutManager.delete(id)
+        user = auth.current_user()
+        ExactWorkoutManager.delete(user, id, WorkoutModel)
         return status.HTTP_204_NO_CONTENT

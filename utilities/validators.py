@@ -17,7 +17,7 @@ def validate_password(password):
         raise ValidationError("Password must contain one Uppercase, one Number and one Special character.")
 
 
-def check_id_exists(model, id):
+def check_if_id_exists(model, id):
     target = model.query.filter_by(id=id).first()
     if not target:
         raise BadRequest("No such item!")
@@ -36,4 +36,10 @@ def model_checker_by_user_role(user, photo_url):
     return AdminUser.query.filter_by(pk=user.pk).update({
         "photo_url": photo_url,
     })
+
+
+def check_if_object_id_is_owned_by_user(user, id, table):
+    object = table.query.filter_by(id=id).first()
+    if not object.users_pk == user.pk:
+        raise BadRequest("You don't have registered such item!")
 

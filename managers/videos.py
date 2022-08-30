@@ -1,6 +1,6 @@
 from database import db
 from models import VideoModel
-from utilities.validators import check_id_exists
+from utilities.validators import check_if_id_exists
 
 
 class VideosManager:
@@ -20,7 +20,7 @@ class VideosManager:
 class ExactVideoManager:
     @staticmethod
     def put(data, video_id):
-        check_id_exists(VideoModel, video_id)
+        check_if_id_exists(VideoModel, video_id)
         VideoModel.query.filter_by(id=video_id).update({
             "name": data["name"],
             "category": data["category"],

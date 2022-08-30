@@ -27,19 +27,20 @@ class ExerciseResource(Resource):
         workouts = ExerciseManager.get_exercises(user, id)
         return ExerciseSchemaResponse().dump(workouts, many=True)
 
+
 class ExactExerciseResource(Resource):
     @auth.login_required
     @permission_required(UserRole.regular)
     @validate_schema(ExerciseSchemaRequest)
     def put(self, id):
         data = request.get_json()
-        auth.current_user()
-        ExactExerciseManager.put(data, id)
+        user = auth.current_user()
+        ExactExerciseManager.put(data, id, user)
         return {"Status": "EDITED"}, status.HTTP_200_OK
 
     @auth.login_required
     @permission_required(UserRole.regular)
     def delete(self, id):
-        auth.current_user()
-        ExactExerciseManager.delete(id)
+        user = auth.current_user()
+        ExactExerciseManager.delete(user, id)
         return status.HTTP_204_NO_CONTENT

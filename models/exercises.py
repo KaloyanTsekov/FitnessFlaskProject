@@ -25,7 +25,6 @@ class WorkoutModel(AbstractExerciseModel, AbstractCategoryModel):
     user = db.relationship("RegularUser")
 
 
-
 class ExerciseModel(AbstractExerciseModel):
     weight = db.Column(db.Float, nullable=False)
     series = db.Column(db.Integer, nullable=False)

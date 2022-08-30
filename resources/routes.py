@@ -7,8 +7,6 @@ from resources.videos import VideosResource, ExactVideoResource
 from resources.workouts import WorkoutResource, ExactWorkoutResource
 
 
-
-
 routes = (
     (RegisterResource, "/register/"),
     (LoginResource, "/login/"),

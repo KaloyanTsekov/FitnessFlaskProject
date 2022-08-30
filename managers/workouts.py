@@ -1,6 +1,6 @@
 from database import db
 from models import WorkoutModel
-from utilities.validators import check_id_exists
+from utilities.validators import check_if_id_exists, check_if_object_id_is_owned_by_user
 
 
 class WorkoutManager:
@@ -13,23 +13,26 @@ class WorkoutManager:
         return workout
 
     @staticmethod
-    def get_videos(user):
+    def get_workouts(user):
         return WorkoutModel.query.filter_by(users_pk=user.pk)
 
 
 class ExactWorkoutManager:
     @staticmethod
-    def put(data, video_id):
-        check_id_exists(WorkoutModel, video_id)
-        WorkoutModel.query.filter_by(id=video_id).update({
+    def put(user, workout_id, workout_model, data):
+        check_if_id_exists(WorkoutModel, workout_id)
+        check_if_object_id_is_owned_by_user(user, workout_id, workout_model)
+        WorkoutModel.query.filter_by(id=workout_id).update({
             "name": data["name"],
             "category": data["category"],
             "day": data["day"]
         })
 
     @staticmethod
-    def delete(video_id):
-        target = WorkoutModel.query.filter_by(id=video_id).first()
+    def delete(user, workout_id, workout_model):
+        check_if_id_exists(WorkoutModel, workout_id)
+        check_if_object_id_is_owned_by_user(user, workout_id, workout_model)
+        target = WorkoutModel.query.filter_by(id=workout_id).first()
         db.session.delete(target)
         db.session.flush()
 

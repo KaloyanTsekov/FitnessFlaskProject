@@ -17,7 +17,7 @@ class VideosResource(Resource):
         return VideosSchemaResponse().dump(videos, many=True)
 
     @auth.login_required
-    @permission_required(UserRole.moderator)  #TODO must be moderator/admin to add videos
+    @permission_required(UserRole.moderator)
     @validate_schema(VideosSchemaRequest)
     def post(self):
         data = request.get_json()
@@ -29,7 +29,7 @@ class VideosResource(Resource):
 
 class ExactVideoResource(Resource):
     @auth.login_required
-    @permission_required(UserRole.moderator)  #TODO must be moderator/admin to add videos
+    @permission_required(UserRole.moderator)
     @validate_schema(VideosSchemaRequest)
     def put(self, id):
         data = request.get_json()
@@ -38,7 +38,7 @@ class ExactVideoResource(Resource):
         return {"Status": "EDITED"}, status.HTTP_200_OK
 
     @auth.login_required
-    @permission_required(UserRole.moderator)  #TODO must be moderator/admin to add videos
+    @permission_required(UserRole.moderator)
     def delete(self, id):
         auth.current_user()
         ExactVideoManager.delete(id)
