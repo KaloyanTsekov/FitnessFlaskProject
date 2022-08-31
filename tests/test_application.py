@@ -1,15 +1,18 @@
+from unittest.mock import patch
+
 from flask_testing import TestCase
 
 from config import create_app
 from database import db
-from models import WorkoutModel
+from models import WorkoutModel, RegularUser
+from services.aws_s3 import S3Service
 from tests.factories import (
     AdminUserFactory,
     RegularUserFactory,
     WorkoutFactory,
     ModeratorUserFactory,
 )
-from tests.helpers import generate_token
+from tests.helpers import generate_token, photo_extension, encoded_photo, mock_uuid
 
 ENDPOINTS_DATA_TOKEN_REQUIRED = (
     ("/admin/promote/", "PUT"),
@@ -392,7 +395,7 @@ class TestApp(TestCase):
     def test_create_video_ok(self):
         moderator = ModeratorUserFactory()
         token = generate_token(moderator)
-        data = {"name": "video", "category": "chest", "youtube_link": "somelink"}
+        data = {"name": "video", "category": "chest", "youtube_link": "link"}
         headers = {
             "Content-Type": "application/json",
             "Authorization": f"Bearer {token}",
@@ -400,3 +403,56 @@ class TestApp(TestCase):
         url = "/videos/"
         resp = self.client.post(url, headers=headers, json=data)
         assert resp.status_code == 201
+
+    @patch.object(S3Service, "upload_photo", return_value="Fake.S3.url")
+    def test_user_can_upload_photo_ok(self, mocked_s3):
+        users = RegularUser.query.all()
+        assert len(users) == 0
+        user = RegularUserFactory()
+        assert user.photo_url == "None"
+
+        token = generate_token(user)
+        data = {"extension": photo_extension, "encoded_photo": encoded_photo}
+        headers = {
+            "Content-Type": "application/json",
+            "Authorization": f"Bearer {token}",
+        }
+
+        url = "/user/photo/"
+        resp = self.client.put(url, headers=headers, json=data)
+        assert resp.status_code == 200
+        assert user.photo_url == mocked_s3.return_value
+
+    @patch("uuid.uuid4", mock_uuid)
+    @patch.object(
+        S3Service, "delete_photo", return_value=f"{mock_uuid}: has been deleted"
+    )
+    @patch.object(
+        S3Service,
+        "upload_photo",
+        return_value=f"https://flask-kaloyan.s3.eu-west-1.amazonaws.com/{mock_uuid()}.JPG",
+    )
+    def test_user_can_delete_photo_ok(self, mocked_s3_create, mocked_s3_delete):
+        users = RegularUser.query.all()
+        assert len(users) == 0
+        user = RegularUserFactory()
+        assert user.photo_url == "None"
+        token = generate_token(user)
+        data = {"extension": photo_extension, "encoded_photo": encoded_photo}
+        headers = {
+            "Content-Type": "application/json",
+            "Authorization": f"Bearer {token}",
+        }
+
+        url = "/user/photo/"
+        resp = self.client.put(url, headers=headers, json=data)
+
+        assert resp.status_code == 200
+        assert user.photo_url == mocked_s3_create.return_value
+        assert (
+            user.photo_url
+            == "https://flask-kaloyan.s3.eu-west-1.amazonaws.com/1111-1111-1111-1111.JPG"
+        )
+        resp = self.client.delete(url, headers=headers)
+        assert resp.status_code == 200
+        assert user.photo_url == "None"
