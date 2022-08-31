@@ -1,7 +1,7 @@
 from marshmallow import Schema, fields
 from marshmallow_enum import EnumField
 
-from models import VideoModel, BodySection
+from models import BodySection
 
 
 class VideosSchemaResponse(Schema):
@@ -10,4 +10,3 @@ class VideosSchemaResponse(Schema):
     category = EnumField(BodySection, required=True)
     youtube_link = fields.Str(required=True)
     users_pk = fields.Int(required=True)
-

@@ -21,16 +21,16 @@ class ExactVideoManager:
     @staticmethod
     def put(data, video_id):
         check_if_id_exists(VideoModel, video_id)
-        VideoModel.query.filter_by(id=video_id).update({
-            "name": data["name"],
-            "category": data["category"],
-            "youtube_link": data["youtube_link"]
-        })
+        VideoModel.query.filter_by(id=video_id).update(
+            {
+                "name": data["name"],
+                "category": data["category"],
+                "youtube_link": data["youtube_link"],
+            }
+        )
 
     @staticmethod
     def delete(video_id):
         target = VideoModel.query.filter_by(id=video_id).first()
         db.session.delete(target)
         db.session.flush()
-
-

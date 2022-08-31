@@ -1,4 +1,5 @@
 from datetime import datetime, timedelta
+
 import jwt
 from decouple import config
 from flask_httpauth import HTTPTokenAuth

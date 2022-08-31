@@ -10,7 +10,12 @@ class S3Service:
         secret = config("AWS_SECRET_KEY")
         self.region = config("S3_REGION")
         self.bucket = config("S3_BUCKET_NAME")
-        self.s3 = boto3.client('s3', region_name=self.region, aws_access_key_id=key, aws_secret_access_key=secret)
+        self.s3 = boto3.client(
+            "s3",
+            region_name=self.region,
+            aws_access_key_id=key,
+            aws_secret_access_key=secret,
+        )
 
     def upload_photo(self, path, key):
         try:
@@ -25,4 +30,3 @@ class S3Service:
             return f"{object_name}: has been deleted"
         except ClientError:
             raise InternalServerError("S3 is not available at the moment")
-

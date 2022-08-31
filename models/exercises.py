@@ -14,7 +14,9 @@ class AbstractCategoryModel(db.Model):
 
 
 class VideoModel(AbstractExerciseModel, AbstractCategoryModel):
-    youtube_link = db.Column(db.String(255), nullable=False) #TODO Refactor with moderator
+    youtube_link = db.Column(
+        db.String(255), nullable=False
+    )  # TODO Refactor with moderator
     users_pk = db.Column(db.Integer, db.ForeignKey("moderator_user.pk"), nullable=False)
     user = db.relationship("ModeratorUser")
 
@@ -29,5 +31,9 @@ class ExerciseModel(AbstractExerciseModel):
     weight = db.Column(db.Float, nullable=False)
     series = db.Column(db.Integer, nullable=False)
     reps = db.Column(db.Integer, nullable=False)
-    workout_pk = db.Column(db.Integer, db.ForeignKey("workout_model.id", ondelete='CASCADE'), nullable=False)
+    workout_pk = db.Column(
+        db.Integer,
+        db.ForeignKey("workout_model.id", ondelete="CASCADE"),
+        nullable=False,
+    )
     user = db.relationship("WorkoutModel")

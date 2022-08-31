@@ -8,4 +8,3 @@ class WorkoutSchemaRequest(Schema):
     name = fields.Str(required=True)
     category = EnumField(BodySection, required=True)
     day = EnumField(DaysFromTheWeekend, required=True)
-

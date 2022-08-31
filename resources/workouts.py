@@ -36,7 +36,7 @@ class ExactWorkoutResource(Resource):
         data = request.get_json()
         user = auth.current_user()
         print(user.pk)
-        ExactWorkoutManager.put(user, id, WorkoutModel, data )
+        ExactWorkoutManager.put(user, id, WorkoutModel, data)
         return {"Status": "EDITED"}, status.HTTP_200_OK
 
     @auth.login_required

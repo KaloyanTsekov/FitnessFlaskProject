@@ -1,6 +1,6 @@
-from flask_restful import Resource
 from flask import request
 from flask_api import status
+from flask_restful import Resource
 
 from managers.users import RegularUserManager, ModeratorUserManager, AdminUserManager
 from schemas.requests.authentication import LoginSchemaRequest, RegisterSchemaRequest
@@ -45,5 +45,3 @@ class AdminLoginResource(Resource):
         data = request.get_json()
         token = AdminUserManager.login(data)
         return {"token": token}, status.HTTP_200_OK
-
-

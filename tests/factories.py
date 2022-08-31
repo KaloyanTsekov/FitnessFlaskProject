@@ -13,10 +13,11 @@ class BaseFactory(factory.Factory):
         return object
 
 
-#TODO Refactor to use one base class
+# TODO Refactor to use one base class
 class AdminUserFactory(BaseFactory):
     class Meta:
         model = AdminUser
+
     pk = factory.Sequence(lambda n: n)
     first_name = factory.Faker("first_name")
     last_name = factory.Faker("last_name")
@@ -28,6 +29,7 @@ class AdminUserFactory(BaseFactory):
 class ModeratorUserFactory(BaseFactory):
     class Meta:
         model = ModeratorUser
+
     pk = factory.Sequence(lambda n: n)
     first_name = factory.Faker("first_name")
     last_name = factory.Faker("last_name")
@@ -39,6 +41,7 @@ class ModeratorUserFactory(BaseFactory):
 class RegularUserFactory(BaseFactory):
     class Meta:
         model = RegularUser
+
     pk = 1
     first_name = factory.Faker("first_name")
     last_name = factory.Faker("last_name")
@@ -50,6 +53,7 @@ class RegularUserFactory(BaseFactory):
 class WorkoutFactory(BaseFactory):
     class Meta:
         model = WorkoutModel
+
     id = 1
     name = factory.Faker("first_name")
     category = "chest"

@@ -18,4 +18,3 @@ class AdminApproverManager:
     @staticmethod
     def demote(email):
         return change_moderator_status(email, UserRole.regular)
-

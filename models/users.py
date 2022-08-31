@@ -9,19 +9,20 @@ class AbstractBaseUserModel(db.Model):
     last_name = db.Column(db.String(20), nullable=False)
     email = db.Column(db.String(50), nullable=False, unique=True)
     password = db.Column(db.String(255), nullable=False)
-    photo_url = db.Column(db.String(255), default='None', nullable=False)
+    photo_url = db.Column(db.String(255), default="None", nullable=False)
 
 
 class RegularUser(AbstractBaseUserModel):
-    __tablename__ = 'regular_user'
+    __tablename__ = "regular_user"
     role = db.Column(db.Enum(UserRole), default=UserRole.regular, nullable=False)
 
 
 class ModeratorUser(AbstractBaseUserModel):
-    __tablename__ = 'moderator_user'
+    __tablename__ = "moderator_user"
     role = db.Column(db.Enum(UserRole), default=UserRole.regular, nullable=False)
     videos = db.relationship("VideoModel", backref="video_model", lazy="dynamic")
 
+
 class AdminUser(AbstractBaseUserModel):
-    __tablename__ = 'admin_user'
+    __tablename__ = "admin_user"
     role = db.Column(db.Enum(UserRole), default=UserRole.admin, nullable=False)

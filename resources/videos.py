@@ -24,7 +24,7 @@ class VideosResource(Resource):
         current_user = auth.current_user()
         VideosManager.create(data, current_user)
         return {"Status": "Video created"}, status.HTTP_201_CREATED
-        #return VideosSchemaResponse().dump(new_video), status.HTTP_201_CREATED   # AttributeError: 'str' object has no attribute 'name'
+        # return VideosSchemaResponse().dump(new_video), status.HTTP_201_CREATED   # AttributeError: 'str' object has no attribute 'name'
 
 
 class ExactVideoResource(Resource):

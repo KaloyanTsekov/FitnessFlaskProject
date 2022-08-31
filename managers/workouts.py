@@ -22,11 +22,9 @@ class ExactWorkoutManager:
     def put(user, workout_id, workout_model, data):
         check_if_id_exists(WorkoutModel, workout_id)
         check_if_object_id_is_owned_by_user(user, workout_id, workout_model)
-        WorkoutModel.query.filter_by(id=workout_id).update({
-            "name": data["name"],
-            "category": data["category"],
-            "day": data["day"]
-        })
+        WorkoutModel.query.filter_by(id=workout_id).update(
+            {"name": data["name"], "category": data["category"], "day": data["day"]}
+        )
 
     @staticmethod
     def delete(user, workout_id, workout_model):
@@ -35,6 +33,3 @@ class ExactWorkoutManager:
         target = WorkoutModel.query.filter_by(id=workout_id).first()
         db.session.delete(target)
         db.session.flush()
-
-
-

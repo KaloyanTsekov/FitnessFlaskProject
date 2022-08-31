@@ -10,4 +10,3 @@ class WorkoutSchemaResponse(Schema):
     category = EnumField(BodySection, required=True)
     day = EnumField(DaysFromTheWeekend, required=True)
     users_pk = fields.Int(required=True)
-
