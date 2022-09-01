@@ -7,7 +7,8 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from database import db
 from managers.authentication import AuthenticationManager
 from models import RegularUser, ModeratorUser, AdminUser
-from services.aws_s3 import S3Service, SESService
+from services.aws_s3 import S3Service
+from services.aws_ses import SESService
 from utilities.common import decode_file
 from utilities.constants import TEMP_DIR, S3LINK
 from utilities.validators import model_checker_by_user_role
