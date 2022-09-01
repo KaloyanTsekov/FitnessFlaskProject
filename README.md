@@ -1,15 +1,17 @@
 # Fitness Organizer Flask
 
 ## About the project
+
 This is very easy to use backend application based
 on Python and Flask library.
 
-##How it Works?
+## How it Works?
+
 The application has 3 types of users - Regular users, Moderators and Admin.
 It also has 3 types of roles - Regular, Moderator and Admin. This is crucial for the Business Logic.
 There is AWS S3 integration. It helps to store profile pictures on every user.
 
-###Regular users:
+### Regular users:
 
 They are able to create/update/delete Workout routines and add/edit/delete Exercises in them.
 Regular users also can watch videos created by the moderators.
@@ -42,6 +44,9 @@ AWS_KEY=""
 AWS_SECRET_KEY=""
 S3_REGION=""
 S3_BUCKET_NAME=""
+ADMIN_EMAIL_ADDRESS=""
+SOURCE_EMAIL_ADDRESS=""
+CHARSET=""
 ```
 
 ## URL List:
@@ -102,7 +107,7 @@ S3_BUCKET_NAME=""
 ```
 ## Future functionalities:
 
-1. AWS SES - Welcome email
+1. AWS SES - Welcome e-mail, using SMTP
 2. Create Thumbnail images on AWS S3 PutObject event, for cost savings and storage optimization
 3. Front-end part
-4. Deployment on AWS
+4. Deployment on AWS 
